@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eldo Hospital — Your Best Medical Care</title>
+<meta name="description" content="Eldo Hospital — integrated clinical care, nine departments, and 24/7 emergency services at Muscco Towers, Eldoret." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F5F2EA;
+    --bg-deep: #ECE7DA;
+    --panel: #FFFFFF;
+    --teal: #1F6F63;
+    --teal-deep: #164F46;
+    --teal-soft: rgba(31,111,99,0.10);
+    --coral: #E2543A;
+    --coral-soft: rgba(226,84,58,0.12);
+    --ink: #16302B;
+    --ink-dim: #52685F;
+    --ink-faint: #8A9891;
+    --line: rgba(22,48,43,0.13);
+    --line-soft: rgba(22,48,43,0.07);
+    --shadow: 0 10px 30px rgba(22,48,43,0.07);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse at 85% -10%, #E4EEE9 0%, var(--bg) 46%),
+      var(--bg);
+    color: var(--ink);
+    font-family:'Inter', sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3,h4,.display{
+    font-family:'Sora', sans-serif;
+    font-weight:600;
+    line-height:1.16;
+    margin:0;
+    letter-spacing:-0.01em;
+    color: var(--teal-deep);
+  }
+  p{ margin:0; }
+  a{ color:inherit; text-decoration:none; }
+  ul{ margin:0; padding:0; list-style:none; }
+  button{ font-family:inherit; }
+  ::selection{ background: var(--teal); color:#fff; }
+  :focus-visible{ outline:2px solid var(--teal); outline-offset:3px; }
+
+  .wrap{ max-width:1160px; margin:0 auto; padding:0 clamp(20px,5vw,56px); }
+
+  .folio{
+    display:flex; align-items:center; gap:14px;
+    font-family:'Sora', sans-serif; font-weight:600;
+    font-size:13px; color: var(--teal); margin-bottom:18px;
+  }
+  .folio::after{ content:""; flex:1; height:1px; background: var(--line); }
+
+  /* ---------- top nav ---------- */
+  header.site-nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background: rgba(245,242,234,0.88);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .nav-inner{
+    max-width:1160px; margin:0 auto; padding:0 clamp(20px,5vw,56px);
+    height:76px; display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{ display:flex; align-items:center; gap:12px; cursor:pointer; }
+  .mark{
+    width:38px; height:38px; border-radius:11px; background: var(--teal);
+    display:flex; align-items:center; justify-content:center; position:relative;
+  }
+  .mark::before, .mark::after{ content:""; position:absolute; background:#fff; border-radius:1px; }
+  .mark::before{ width:14px; height:3px; }
+  .mark::after{ width:3px; height:14px; }
+  .brand-text{ line-height:1.2; }
+  .brand-text strong{ font-family:'Sora', sans-serif; font-size:18px; display:block; font-weight:700; color: var(--teal-deep); }
+  .brand-text span{ font-size:11px; color: var(--ink-faint); }
+
+  nav.links{ display:flex; gap:4px; align-items:center; }
+  nav.links button{
+    background:none; border:none; cursor:pointer;
+    color: var(--ink-dim); font-size:14.5px; padding:9px 16px; border-radius: 999px;
+    transition: color .2s ease, background .2s ease;
+  }
+  nav.links button:hover{ color: var(--teal-deep); background: var(--teal-soft); }
+  nav.links button.active{ color: var(--teal-deep); background: var(--teal-soft); font-weight:600; }
+  .nav-cta{ background: var(--coral) !important; color:#fff !important; margin-left:10px; }
+  .nav-cta:hover{ opacity:0.9; background: var(--coral) !important; color:#fff !important; }
+
+  .hamburger{
+    display:none; background:none; border:1px solid var(--line);
+    width:40px; height:40px; border-radius:10px; cursor:pointer; position:relative;
+  }
+  .hamburger span, .hamburger span::before, .hamburger span::after{
+    content:""; position:absolute; left:10px; right:10px; height:1px; background: var(--ink);
+  }
+  .hamburger span{ top:19px; }
+  .hamburger span::before{ top:-6px; }
+  .hamburger span::after{ top:6px; }
+
+  /* ---------- page shell / transitions ---------- */
+  main{ margin-top:76px; }
+  .page{ display:none; min-height:calc(100vh - 76px); padding-bottom:90px; }
+  .page.active{ display:block; }
+  .page.enter{ animation: pageIn .6s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes pageIn{
+    from{ opacity:0; transform: perspective(1200px) rotateX(3deg) translateY(20px); }
+    to{ opacity:1; transform: perspective(1200px) rotateX(0) translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce){ .page.enter{ animation:none; } html{ scroll-behavior:auto; } }
+
+  section{ padding: clamp(56px,8vw,96px) 0; }
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end; gap:24px;
+    margin-bottom:44px; border-bottom:1px solid var(--line); padding-bottom:18px;
+  }
+  .section-head h2{ font-size: clamp(27px,3.4vw,36px); }
+  .section-head .idx{ font-size:13px; color: var(--ink-faint); white-space:nowrap; padding-bottom:5px; }
+
+  /* ================= HOME / HERO ================= */
+  .hero{
+    padding-top: clamp(40px,7vw,72px);
+    display:grid; grid-template-columns: 1fr 0.92fr; gap:40px; align-items:center;
+  }
+  .hero-copy h1{ font-size: clamp(34px,5vw,54px); }
+  .hero-copy h1 em{ font-style:normal; color: var(--teal); }
+  .hero-copy .pitch{ margin-top:20px; max-width:48ch; color: var(--ink-dim); font-size:16.5px; }
+  .hero-actions{ margin-top:30px; display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{
+    font-family:'Sora', sans-serif; font-weight:600; font-size:14px; padding:14px 24px;
+    border:1px solid var(--line); cursor:pointer; background:transparent; color: var(--teal-deep);
+    border-radius: 999px;
+    transition: border-color .2s ease, transform .2s ease, background .2s ease, color .2s ease;
+  }
+  .btn-primary{ background: var(--teal); border-color: var(--teal); color:#fff; }
+  .btn-primary:hover{ transform: translateY(-2px); }
+  .btn-emergency{ background: var(--coral); border-color: var(--coral); color:#fff; }
+  .btn-emergency:hover{ transform: translateY(-2px); }
+  .btn-ghost:hover{ border-color: var(--teal); color: var(--teal); transform: translateY(-2px); }
+
+  .hero-stats{
+    margin-top:44px; display:grid; grid-template-columns: repeat(4,1fr);
+    border-top:1px solid var(--line); padding-top:22px; gap:10px;
+  }
+  .stat b{ display:block; font-family:'Sora',sans-serif; font-size:clamp(21px,2.4vw,26px); color: var(--teal-deep); }
+  .stat span{ font-size:11.5px; color: var(--ink-faint); }
+
+  .pulse-stage{ position:relative; height: clamp(320px,42vw,470px); background: var(--panel); border-radius:20px; box-shadow: var(--shadow); border:1px solid var(--line-soft); overflow:hidden; }
+  .pulse-stage canvas{ width:100%; height:100%; display:block; }
+  .pulse-caption{ position:absolute; bottom:12px; left:16px; font-size:12px; color: var(--ink-faint); }
+
+  .info-strip{
+    margin-top:64px;
+    display:grid; grid-template-columns: repeat(3,1fr); gap:20px;
+  }
+  .info-card{ background: var(--panel); border-radius:16px; padding:24px; box-shadow: var(--shadow); border:1px solid var(--line-soft); }
+  .info-card h4{ font-size:15.5px; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+  .info-card h4 i{ width:8px; height:8px; border-radius:50%; background: var(--teal); display:inline-block; font-style:normal; }
+  .info-card.urgent h4 i{ background: var(--coral); }
+  .info-card p{ font-size:13.8px; color: var(--ink-dim); line-height:1.75; }
+
+  /* department preview + why choose */
+  .subhead{ font-size:13px; color: var(--ink-faint); margin:64px 0 22px; padding-top:26px; border-top:1px solid var(--line); }
+
+  .dept-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:18px; perspective:1000px; }
+  .dept-card{ transform: rotateX(var(--ry,0deg)) rotateY(var(--rx,0deg)); background: var(--panel); border-radius:16px; padding:24px; box-shadow: var(--shadow); border:1px solid var(--line-soft); }
+  .dept-card h4{ font-size:17px; margin-bottom:8px; }
+  .dept-card p{ font-size:13.8px; color: var(--ink-dim); }
+
+  .why-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:20px; }
+  .why-card{ text-align:left; }
+  .why-num{ font-family:'Sora',sans-serif; font-size:26px; color: var(--teal); font-weight:700; margin-bottom:10px; }
+  .why-card h4{ font-size:16px; margin-bottom:6px; }
+  .why-card p{ font-size:13.5px; color: var(--ink-dim); }
+
+  .news-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:20px; }
+  .news-card{ background: var(--panel); border-radius:16px; padding:24px; box-shadow: var(--shadow); border:1px solid var(--line-soft); }
+  .news-card h4{ font-size:17px; margin-bottom:10px; }
+  .news-card p{ font-size:13.8px; color: var(--ink-dim); margin-bottom:14px; }
+  .news-card .read{ font-size:13px; color: var(--teal); font-weight:600; }
+  .disclaimer{ margin-top:34px; padding:16px 20px; border-radius:14px; background: var(--teal-soft); font-size:13px; color: var(--ink-dim); }
+
+  /* ================= ABOUT ================= */
+  .about-grid{ display:grid; grid-template-columns: 0.95fr 1.05fr; gap:56px; }
+  .about-lede p{ color: var(--ink-dim); margin-bottom:16px; font-size:16px; }
+  .about-lede p:first-child{
+    font-size:19px; color: var(--teal-deep); font-family:'Sora',serif; font-weight:600; line-height:1.5;
+  }
+  .value-row{ margin-top:26px; display:flex; flex-wrap:wrap; gap:10px; }
+  .value-row span{ border:1px solid var(--line); border-radius:999px; padding:7px 16px; font-size:13px; color: var(--ink-dim); background: var(--panel); }
+
+  .doctor-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:20px; perspective:1000px; }
+  .doctor-card{ transform: rotateX(var(--ry,0deg)) rotateY(var(--rx,0deg)); background: var(--panel); border-radius:16px; padding:24px; box-shadow: var(--shadow); border:1px solid var(--line-soft); text-align:left; }
+  .doctor-avatar{ width:46px; height:46px; border-radius:50%; background: var(--teal-soft); color: var(--teal-deep); display:flex; align-items:center; justify-content:center; font-family:'Sora',sans-serif; font-weight:700; font-size:16px; margin-bottom:16px; }
+  .doctor-card h4{ font-size:17px; margin-bottom:4px; }
+  .doctor-card span{ font-size:12.5px; color: var(--ink-faint); }
+
+  .notice{ margin-top:36px; padding:16px 18px; border-radius:14px; border:1px solid var(--line); font-size:13px; color: var(--ink-faint); }
+
+  /* ================= DEPARTMENTS PAGE ================= */
+  .dept-intro{ max-width:60ch; color: var(--ink-dim); font-size:16px; margin-bottom:44px; }
+  .dept-full-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:18px; perspective:1000px; }
+
+  /* ================= CONTACT ================= */
+  .contact-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:56px; }
+  .contact-list{ margin-top:28px; }
+  .contact-list li{ display:flex; justify-content:space-between; padding:16px 0; border-bottom:1px solid var(--line); font-size:15px; gap:14px; }
+  .contact-list li span:first-child{ color: var(--ink-faint); font-size:13px; white-space:nowrap; }
+  .contact-list li a, .contact-list li span:last-child{ color: var(--ink); text-align:right; }
+  .contact-list li a:hover{ color: var(--teal); }
+
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-size:13px; color: var(--ink-faint); margin-bottom:8px; }
+  .field input, .field select, .field textarea{
+    width:100%; background: var(--panel); border:1px solid var(--line); color: var(--ink);
+    padding:12px 14px; border-radius:10px; font-family:'Inter',sans-serif; font-size:14.5px; resize:vertical;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{ border-color: var(--teal); outline:none; }
+  .form-msg{ font-size:13px; color: var(--teal); margin-top:10px; min-height:16px; }
+
+  footer{ border-top:1px solid var(--line); padding: 46px 0 30px; }
+  .footer-grid{ display:grid; grid-template-columns: 1.3fr 1fr 1fr; gap:32px; margin-bottom:32px; }
+  .footer-grid h5{ font-family:'Sora',sans-serif; font-size:14px; color: var(--teal); margin-bottom:14px; font-weight:600; }
+  .footer-grid li{ font-size:13.5px; color: var(--ink-dim); padding:5px 0; }
+  .footer-grid a:hover{ color: var(--teal); }
+  .footer-bottom{
+    border-top:1px solid var(--line); padding-top:20px;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    font-size:12.5px; color: var(--ink-faint);
+  }
+  .footer-bottom a{ color: var(--ink-dim); }
+  .footer-bottom a:hover{ color: var(--teal); }
+
+  @media (max-width:900px){
+    nav.links{
+      position:fixed; top:76px; left:0; right:0; background: var(--bg);
+      border-bottom:1px solid var(--line); flex-direction:column; align-items:stretch;
+      padding:10px 20px 20px; display:none;
+    }
+    nav.links.open{ display:flex; }
+    nav.links button{ text-align:left; padding:13px 10px; border-bottom:1px solid var(--line-soft); border-radius:0; }
+    .nav-cta{ margin:10px 0 0; text-align:center; border-radius:10px; }
+    .hamburger{ display:block; }
+
+    .hero{ grid-template-columns:1fr; }
+    .hero-stats{ grid-template-columns: repeat(2,1fr); row-gap:22px; }
+    .info-strip{ grid-template-columns: 1fr; }
+    .why-grid{ grid-template-columns: 1fr 1fr; }
+    .about-grid, .contact-grid{ grid-template-columns:1fr; }
+    .dept-grid, .doctor-grid, .news-grid, .dept-full-grid{ grid-template-columns: 1fr 1fr; }
+    .footer-grid{ grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width:560px){
+    .why-grid, .dept-grid, .doctor-grid, .news-grid, .dept-full-grid, .footer-grid{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <div class="brand" data-nav="home">
+      <div class="mark"></div>
+      <div class="brand-text">
+        <strong>Eldo Hospital</strong>
+        <span>Muscco Towers, Eldoret</span>
+      </div>
+    </div>
+    <nav class="links" id="navLinks">
+      <button data-nav="home" class="active">Home</button>
+      <button data-nav="about">About</button>
+      <button data-nav="departments">Departments</button>
+      <button data-nav="contact" class="nav-cta">Emergency &amp; Contact</button>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation"><span></span></button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================= HOME ================= -->
+  <section class="page active" id="page-home" data-page="home">
+    <div class="wrap">
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="folio">Eldoret, Kenya</p>
+          <h1>Your best <em>medical care</em>.</h1>
+          <p class="pitch">Eldo Hospital exists to inspire hope and support health and well-being, giving every patient care built on integrated clinical practice, education and research — with the goal of better outcomes at a fairer cost for the communities we serve.</p>
+          <div class="hero-actions">
+            <button class="btn btn-emergency" data-nav="contact">Emergency: 24/7</button>
+            <button class="btn btn-ghost" data-nav="departments">View departments</button>
+          </div>
+          <div class="hero-stats">
+            <div class="stat"><b>9</b><span>Departments</span></div>
+            <div class="stat"><b>24/7</b><span>Emergency care</span></div>
+            <div class="stat"><b>2</b><span>Staff shifts, round the clock</span></div>
+            <div class="stat"><b>On-site</b><span>Pharmacy &amp; laboratory</span></div>
+          </div>
+        </div>
+
+        <div class="pulse-stage" id="pulseStage" aria-hidden="true">
+          <canvas id="pulseCanvas"></canvas>
+          <p class="pulse-caption">Vitals, watched around the clock.</p>
+        </div>
+      </div>
+
+      <div class="info-strip">
+        <div class="info-card urgent">
+          <h4><i></i>Emergency 24/7</h4>
+          <p>Ambulance: +254 708 923 812<br>Surgery room: +254 708 923 812<br>For emergency cases only.</p>
+        </div>
+        <div class="info-card">
+          <h4><i></i>Opening Schedule</h4>
+          <p>Mon – Fri: 08:00 – 20:00<br>Saturday: 08:00 – 17:00<br>Sunday &amp; holidays: 09:00 – 15:00</p>
+        </div>
+        <div class="info-card">
+          <h4><i></i>Call Center</h4>
+          <p>Appointments &amp; laboratory &amp; business lines — see Contact for direct numbers.</p>
+        </div>
+      </div>
+
+      <p class="subhead">Departments</p>
+      <div class="dept-grid" id="deptPreviewGrid"></div>
+      <div style="margin-top:22px;"><span class="folio" style="cursor:pointer; display:inline-flex;" data-nav="departments">See all departments →</span></div>
+
+      <p class="subhead">Why choose Eldo Hospital</p>
+      <div class="why-grid">
+        <div class="why-card"><div class="why-num">01</div><h4>Qualified Doctors</h4><p>Specialists selected from leading universities and vetted for real clinical experience.</p></div>
+        <div class="why-card"><div class="why-num">02</div><h4>Emergency 24/7</h4><p>Ambulance and surgery teams on call around the clock, every day of the year.</p></div>
+        <div class="why-card"><div class="why-num">03</div><h4>Modern Technology</h4><p>Diagnostic and treatment equipment kept current for accurate results.</p></div>
+        <div class="why-card"><div class="why-num">04</div><h4>Pharmacy</h4><p>An on-site pharmacy so a prescription doesn't mean another stop.</p></div>
+      </div>
+
+      <p class="subhead">News &amp; health tips</p>
+      <div class="news-grid">
+        <div class="news-card"><h4>Joint health as you age</h4><p>Regular movement helps protect muscles, bones and joints over time — and it's rarely too late to start building a more active routine.</p><span class="read">Read more →</span></div>
+        <div class="news-card"><h4>Understanding lower back pain</h4><p>Many cases of lower back pain respond well to guided physical therapy that strengthens supporting muscles and eases pressure on the spine.</p><span class="read">Read more →</span></div>
+        <div class="news-card"><h4>Looking after your knees</h4><p>Strengthening the muscles around the knee joint can improve stability — a doctor can recommend the right approach for your specific case.</p><span class="read">Read more →</span></div>
+      </div>
+      <p class="disclaimer">These health tips are general information only, not a substitute for professional medical advice, diagnosis or treatment. Always consult a qualified doctor about your specific situation, and in an emergency call the numbers above directly.</p>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="page" id="page-about" data-page="about">
+    <div class="wrap">
+      <div class="section-head"><h2>About Eldo Hospital</h2><span class="idx">Facilities, staff &amp; doctors</span></div>
+
+      <div class="about-grid">
+        <div class="about-lede">
+          <p>Care built on integrated clinical practice, education and research.</p>
+          <p>Our facilities are built to give patients a calm, modern environment to recover in — clean, well-equipped, and staffed by people who take the time to explain what's happening and why.</p>
+          <p>Diagnostic and treatment equipment is kept current, so testing stays accurate and diagnosis stays fast.</p>
+          <p>Staff work in two shifts to keep every department covered around the clock, drawn from cardiology, neurology, dentistry and beyond — selected from strong training backgrounds and screened for how they actually treat patients, not just their qualifications on paper.</p>
+          <div class="value-row">
+            <span>Experience</span><span>Amiability</span><span>Reliability</span>
+          </div>
+        </div>
+        <div class="about-visual">
+          <p class="folio">Our facilities</p>
+          <p style="color:var(--ink-dim); font-size:15px; margin-bottom:28px;">Modern, calm spaces designed to help patients recover, with qualified staff on hand throughout your stay.</p>
+          <p class="folio">Our equipment</p>
+          <p style="color:var(--ink-dim); font-size:15px;">Current diagnostic technology, operated by competent staff, to get patients the most accurate read on their symptoms.</p>
+        </div>
+      </div>
+
+      <p class="subhead">Our doctors</p>
+      <div class="doctor-grid">
+        <div class="card doctor-card"><div class="doctor-avatar">MB</div><h4>Dr. Mary Brown</h4><span>Cardiologist</span></div>
+        <div class="card doctor-card"><div class="doctor-avatar">BG</div><h4>Dr. Bob Greenfield</h4><span>Neurologist</span></div>
+        <div class="card doctor-card"><div class="doctor-avatar">AR</div><h4>Dr. Ann Richmond</h4><span>Dentist</span></div>
+      </div>
+
+      <p class="notice">Doctor names above are placeholder content carried over from the original template — replace with your real clinical staff and credentials before publishing. Minor typos in the source ("Caediologist", "Bob Green field") have been corrected here.</p>
+    </div>
+  </section>
+
+  <!-- ================= DEPARTMENTS ================= -->
+  <section class="page" id="page-departments" data-page="departments">
+    <div class="wrap">
+      <div class="section-head"><h2>Departments</h2><span class="idx">Nine areas of care</span></div>
+      <p class="dept-intro">From routine care to specialist treatment, here's where to start — each department is staffed and equipped for its area of medicine.</p>
+      <div class="dept-full-grid" id="deptFullGrid"></div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="page" id="page-contact" data-page="contact">
+    <div class="wrap">
+      <div class="section-head"><h2>Emergency &amp; Contact</h2><span class="idx">Reach us</span></div>
+
+      <div class="contact-grid">
+        <div>
+          <p style="max-width:44ch; color:var(--ink-dim); font-size:16px;">For emergencies, call the numbers below directly. For everything else, reach out and our team will get back to you.</p>
+
+          <ul class="contact-list">
+            <li><span>Ambulance (emergency only)</span><a href="tel:+254708923812">+254 708 923 812</a></li>
+            <li><span>Surgery room (emergency only)</span><a href="tel:+254708923812">+254 708 923 812</a></li>
+            <li><span>General line</span><a href="tel:+254707385519">+254 707 385 519</a></li>
+            <li><span>Email</span><a href="mailto:eldohospital@outlook.com">eldohospital@outlook.com</a></li>
+            <li><span>Address</span><span>Muscco Towers, 4th Floor, Eldoret</span></li>
+            <li><span>Hours</span><span>Mon–Fri 08:00–20:00 · Sat 08:00–17:00 · Sun 09:00–15:00</span></li>
+          </ul>
+
+          <div class="notice">The original listing's call-center numbers ("51 000 0000") appear to be template placeholders rather than real lines — replace them with your actual appointment, laboratory and business numbers before publishing.</div>
+        </div>
+
+        <div>
+          <form id="contactForm">
+            <div class="field">
+              <label for="cf-name">Name</label>
+              <input id="cf-name" type="text" required placeholder="Your full name">
+            </div>
+            <div class="field">
+              <label for="cf-email">Email</label>
+              <input id="cf-email" type="email" required placeholder="you@example.com">
+            </div>
+            <div class="field">
+              <label for="cf-dept">Department</label>
+              <select id="cf-dept">
+                <option>General enquiry</option>
+                <option>Gynecology</option>
+                <option>Pediatrics</option>
+                <option>Ophthalmology</option>
+                <option>Neurology</option>
+                <option>Odontology</option>
+                <option>Laboratory</option>
+                <option>Physiotherapy</option>
+                <option>Orthopedics</option>
+                <option>Laparoscopy</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="cf-message">Message</label>
+              <textarea id="cf-message" rows="5" required placeholder="How can we help?"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send message</button>
+            <p class="form-msg" id="formMsg"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h5>Eldo Hospital</h5>
+        <p style="font-size:13.5px; color:var(--ink-dim); max-width:32ch;">Your best medical care — integrated clinical practice, education and research, at Muscco Towers, Eldoret.</p>
+      </div>
+      <div>
+        <h5>Quick Links</h5>
+        <ul>
+          <li><a href="#" data-nav="home">Home</a></li>
+          <li><a href="#" data-nav="about">About</a></li>
+          <li><a href="#" data-nav="departments">Departments</a></li>
+          <li><a href="#" data-nav="contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Find Us</h5>
+        <ul>
+          <li>Muscco Towers, 4th Floor, Eldoret</li>
+          <li>+254 707 385 519</li>
+          <li>eldohospital@outlook.com</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Eldo Hospital.</span>
+      <span>Site by <a href="https://phillipkolale.github.io/apluswebsiteandgraphicsdevelopers/Home.html" target="_blank" rel="noopener">A+ Website &amp; Graphics Developers</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------------- Navigation ---------------- */
+  const pages = document.querySelectorAll('.page');
+  const navLinks = document.getElementById('navLinks');
+  const hamburger = document.getElementById('hamburger');
+
+  function goTo(name){
+    document.querySelectorAll('#navLinks button').forEach(b => b.classList.toggle('active', b.dataset.nav === name));
+    pages.forEach(p => {
+      if(p.dataset.page === name){
+        p.classList.add('active'); p.classList.remove('enter');
+        void p.offsetWidth; p.classList.add('enter');
+      } else { p.classList.remove('active'); }
+    });
+    navLinks.classList.remove('open');
+    window.scrollTo({top:0});
+  }
+  document.querySelectorAll('[data-nav]').forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); goTo(btn.dataset.nav); }));
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+  function applyTilt(card){
+    if(reduceMotion) return;
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.setProperty('--rx', (x * 6).toFixed(2) + 'deg');
+      card.style.setProperty('--ry', (-y * 6).toFixed(2) + 'deg');
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.setProperty('--rx', '0deg'); card.style.setProperty('--ry', '0deg');
+    });
+  }
+
+  /* ---------------- Departments data ---------------- */
+  const departments = [
+    { name:"Gynecology", desc:"Care for the reproductive health of women, from routine checks to treatment." },
+    { name:"Pediatrics", desc:"Development, care and treatment for infants, children and adolescents." },
+    { name:"Ophthalmology", desc:"Diagnosis and treatment for conditions of the eye and vision." },
+    { name:"Neurology", desc:"Care for the brain, spine and nervous system." },
+    { name:"Odontology", desc:"Dental care covering the structure, development and health of teeth." },
+    { name:"Laboratory", desc:"On-site testing and analysis to support fast, accurate diagnosis." },
+    { name:"Physiotherapy", desc:"Restoring and preserving movement after injury, illness or disability." },
+    { name:"Orthopedics", desc:"Correcting and preventing disorders of the skeleton and joints." },
+    { name:"Laparoscopy", desc:"Minimally invasive procedures, including gallbladder and related surgery." }
+  ];
+
+  const previewGrid = document.getElementById('deptPreviewGrid');
+  departments.slice(0,6).forEach(d => {
+    const card = document.createElement('div');
+    card.className = 'dept-card';
+    card.innerHTML = `<h4>${d.name}</h4><p>${d.desc}</p>`;
+    previewGrid.appendChild(card);
+    applyTilt(card);
+  });
+
+  const fullGrid = document.getElementById('deptFullGrid');
+  departments.forEach(d => {
+    const card = document.createElement('div');
+    card.className = 'dept-card';
+    card.innerHTML = `<h4>${d.name}</h4><p>${d.desc}</p>`;
+    fullGrid.appendChild(card);
+    applyTilt(card);
+  });
+
+  document.querySelectorAll('.doctor-card').forEach(applyTilt);
+
+  /* ---------------- Contact form (mailto) ---------------- */
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('cf-name').value;
+    const email = document.getElementById('cf-email').value;
+    const dept = document.getElementById('cf-dept').value;
+    const message = document.getElementById('cf-message').value;
+    const body = `From: ${name} (${email})\nDepartment: ${dept}\n\n${message}`;
+    window.location.href = `mailto:eldohospital@outlook.com?subject=${encodeURIComponent(dept + ' enquiry')}&body=${encodeURIComponent(body)}`;
+    document.getElementById('formMsg').textContent = 'Opening your email client…';
+  });
+
+  /* ================= 3D heartbeat monitor (Three.js hero) ================= */
+  (function(){
+    const stage = document.getElementById('pulseStage');
+    const canvas = document.getElementById('pulseCanvas');
+    if(!window.THREE || !stage || !canvas) return;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(42, stage.clientWidth / stage.clientHeight, 0.1, 100);
+    camera.position.set(0, 1.2, 4.6);
+    camera.lookAt(0, 0, 0);
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(stage.clientWidth, stage.clientHeight);
+
+    const group = new THREE.Group();
+    scene.add(group);
+
+    // medical cross, line art, slowly rotating
+    const crossMat = new THREE.LineBasicMaterial({ color: 0x1F6F63, transparent:true, opacity:0.55 });
+    function crossEdges(){
+      const shape = new THREE.Shape();
+      const a = 0.24, b = 0.72;
+      shape.moveTo(-a, b); shape.lineTo(a, b); shape.lineTo(a, a);
+      shape.lineTo(b, a); shape.lineTo(b, -a); shape.lineTo(a, -a);
+      shape.lineTo(a, -b); shape.lineTo(-a, -b); shape.lineTo(-a, -a);
+      shape.lineTo(-b, -a); shape.lineTo(-b, a); shape.lineTo(-a, a);
+      shape.closePath();
+      const geo = new THREE.ExtrudeGeometry(shape, { depth: 0.06, bevelEnabled:false });
+      return new THREE.EdgesGeometry(geo);
+    }
+    const cross = new THREE.LineSegments(crossEdges(), crossMat);
+    cross.position.set(0, 0.55, -0.3);
+    cross.scale.set(0.8,0.8,0.8);
+    group.add(cross);
+
+    // ECG waveform, scrolling
+    const N = 160;
+    const WIDTH = 3.6;
+    const values = new Array(N).fill(0);
+    let phase = 0;
+    function ecgValue(t){
+      t = t % 1;
+      let v = 0;
+      v += 0.10*Math.exp(-Math.pow((t-0.12)/0.02,2));
+      v += -0.12*Math.exp(-Math.pow((t-0.23)/0.010,2));
+      v += 0.85*Math.exp(-Math.pow((t-0.25)/0.007,2));
+      v += -0.22*Math.exp(-Math.pow((t-0.27)/0.010,2));
+      v += 0.16*Math.exp(-Math.pow((t-0.46)/0.03,2));
+      return v * 0.55;
+    }
+
+    const pts = [];
+    for(let i=0;i<N;i++){
+      const x = -WIDTH/2 + (WIDTH * i/(N-1));
+      pts.push(new THREE.Vector3(x, values[i], 0));
+    }
+    const ecgGeo = new THREE.BufferGeometry().setFromPoints(pts);
+    const ecgMat = new THREE.LineBasicMaterial({ color: 0xE2543A, transparent:true, opacity:0.85 });
+    const ecgLine = new THREE.Line(ecgGeo, ecgMat);
+    ecgLine.position.y = -0.5;
+    group.add(ecgLine);
+
+    // baseline grid
+    const gridMat = new THREE.LineBasicMaterial({ color: 0x1F6F63, transparent:true, opacity:0.08 });
+    for(let i=-3;i<=3;i++){
+      const gp = [new THREE.Vector3(-WIDTH/2, -0.5 + i*0.18, -0.01), new THREE.Vector3(WIDTH/2, -0.5 + i*0.18, -0.01)];
+      group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(gp), gridMat));
+    }
+
+    group.rotation.x = -0.12;
+
+    let raf;
+    function animate(){
+      raf = requestAnimationFrame(animate);
+      if(!reduceMotion){
+        phase += 0.006;
+        values.shift();
+        values.push(ecgValue(phase));
+        const posAttr = ecgLine.geometry.attributes.position;
+        for(let i=0;i<N;i++){ posAttr.setY(i, values[i]); }
+        posAttr.needsUpdate = true;
+
+        cross.rotation.y += 0.004;
+      }
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    function onResize(){
+      const w = stage.clientWidth, h = stage.clientHeight;
+      if(!w || !h) return;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    }
+    window.addEventListener('resize', onResize);
+    onResize();
+  })();
+</script>
+</body>
+</html>
